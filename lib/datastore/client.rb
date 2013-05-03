@@ -1,4 +1,3 @@
-
 class Client
   def initialize(options)
     base_url = 'https://www.googleapis.com/datastore/'
@@ -18,8 +17,8 @@ class Client
     @client.authorization = Signet::OAuth2::Client.new({
       :audience => 'https://accounts.google.com/o/oauth2/token',
       :auth_provider_x509_cert_url => "https://www.googleapis.com/oauth2/v1/certs",
-      :client_x509_cert_url => "https://www.googleapis.com/robot/v1/metadata/x509/#{google_client_email}",
-      :issuer => google_client_email,
+      :client_x509_cert_url => "https://www.googleapis.com/robot/v1/metadata/x509/#{@@google_client_email}",
+      :issuer => @google_client_email,
         :scope => api_scope_url,
         :signing_key => key,
         :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
