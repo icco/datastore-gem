@@ -5,6 +5,8 @@ module Datastore
       api_version = 'v1beta1'
       api_scope_url = 'https://www.googleapis.com/auth/datastore'
 
+      @dataset = options[:dataset]
+
       @project = options[:google_project]
       @google_client_email = options[:google_client_email]
       @api_url = base_url + api_version + '/projects/'
@@ -31,6 +33,23 @@ module Datastore
 
       doc = File.read(File.join(File.dirname(__FILE__), 'datastore_v1beta1_rest.json'))
       @datastore = @client.register_discovery_document('datastore', 'v1beta1', doc)
+    end
+
+    def insert key, value
+      @datastore.blindwrite({
+        :datasetId => @dataset,
+        :mutation => {
+          :insertAutoId => [{
+            :properties => {
+              key => {
+                :values => [{
+                  :stringValue => value.to_s,
+                }]
+              }
+            }
+          }]
+        }
+      })
     end
   end
 end
