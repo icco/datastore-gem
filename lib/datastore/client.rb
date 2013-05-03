@@ -15,20 +15,22 @@ module Datastore
         :application_version => Datastore::VERSION,
       })
 
-      @client.authorization = Signet::OAuth2::Client.new({
+      params = {
         :audience => 'https://accounts.google.com/o/oauth2/token',
         :auth_provider_x509_cert_url => "https://www.googleapis.com/oauth2/v1/certs",
         :client_x509_cert_url => "https://www.googleapis.com/robot/v1/metadata/x509/#{@google_client_email}",
         :issuer => @google_client_email,
-          :scope => api_scope_url,
-          :signing_key => key,
-          :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
-      })
+        :scope => api_scope_url,
+        :signing_key => key,
+        :token_credential_uri => 'https://accounts.google.com/o/oauth2/token',
+      }
 
-        @client.authorization.fetch_access_token!
+      @client.authorization = Signet::OAuth2::Client.new(params)
 
-        doc = File.read(File.expand_path(File.dirname(__FILE__), 'datastore_v1beta1_rest.json'))
-        @datastore = @client.discover('datastore', 'v1beta1', doc)
+      @client.authorization.fetch_access_token!
+
+      doc = File.read(File.expand_path(File.dirname(__FILE__), 'datastore_v1beta1_rest.json'))
+      @datastore = @client.discover('datastore', 'v1beta1', doc)
     end
   end
 end
