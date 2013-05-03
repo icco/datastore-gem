@@ -33,11 +33,11 @@ module Datastore
 
       doc = File.read(File.join(File.dirname(__FILE__), 'datastore_v1beta1_rest.json'))
       @datastore = @client.register_discovery_document('datastore', 'v1beta1', doc)
+      p @client.discovered_apis
     end
 
     def insert key, value
-      @datastore.blindwrite({
-        :datasetId => @dataset,
+      request = {
         :mutation => {
           :insertAutoId => [{
             :properties => {
@@ -49,7 +49,15 @@ module Datastore
             }
           }]
         }
-      })
+      }
+
+      @client.execute(
+        :api_method => 'datastore.datasets.blindwrite',
+        :parameters => {
+          :datasetId => @dataset,
+        },
+        :body_object => request
+      )
     end
   end
 end
