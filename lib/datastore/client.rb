@@ -29,8 +29,8 @@ module Datastore
 
       @client.authorization.fetch_access_token!
 
-      doc = File.read(File.expand_path(File.dirname(__FILE__), 'datastore_v1beta1_rest.json'))
-      @datastore = @client.discover('datastore', 'v1beta1', doc)
+      doc = File.read(File.join(File.dirname(__FILE__), 'datastore_v1beta1_rest.json'))
+      @datastore = @client.register_discovery_document('datastore', 'v1beta1', doc)
     end
   end
 end
