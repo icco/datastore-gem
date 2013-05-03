@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nat Welch"]
   spec.email         = ["nat@natwelch.com"]
 
-  spec.description   = %q{TODO: Write a gem description}
+  spec.description   = %q{A gem for interacting with the Google Cloud Datastore.}
   spec.summary       = %q{A gem for interacting with the Google Cloud Datastore.}
   spec.homepage      = ""
 
