@@ -1,6 +1,6 @@
-# Datastore
+# Datastore Gem
 
-TODO: Write a gem description
+A gem for interacting with the Google Cloud Datastore
 
 ## Installation
 
