@@ -1,8 +1,10 @@
+require 'datastore'
+
 Shindo.tests("Datastore Client") do
 
   tests('connect') do
 
-    tests("").succeeds do
+    tests("Client#new") do
       client = Datastore::Client.new({
         :google_project => 'xz-natwelch-cloud',
         :google_client_email => '362304721969@developer.gserviceaccount.com',
@@ -10,6 +12,8 @@ Shindo.tests("Datastore Client") do
       })
 
       p client
+
+      return client
     end
   end
 
