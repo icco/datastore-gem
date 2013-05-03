@@ -8,9 +8,9 @@ module Datastore
       @project = options[:google_project]
       @google_client_email = options[:google_client_email]
       @api_url = base_url + api_version + '/projects/'
-      key = ::Google::APIClient::KeyUtils.load_from_pkcs12(File.expand_path(options[:google_key_location]), 'notasecret')
+      key = Google::APIClient::KeyUtils.load_from_pkcs12(File.expand_path(options[:google_key_location]), 'notasecret')
 
-      @client = ::Google::APIClient.new({
+      @client = Google::APIClient.new({
         :application_name => "datastore gem",
         :application_version => Datastore::VERSION,
       })
@@ -18,7 +18,7 @@ module Datastore
       @client.authorization = Signet::OAuth2::Client.new({
         :audience => 'https://accounts.google.com/o/oauth2/token',
         :auth_provider_x509_cert_url => "https://www.googleapis.com/oauth2/v1/certs",
-        :client_x509_cert_url => "https://www.googleapis.com/robot/v1/metadata/x509/#{@@google_client_email}",
+        :client_x509_cert_url => "https://www.googleapis.com/robot/v1/metadata/x509/#{@google_client_email}",
         :issuer => @google_client_email,
           :scope => api_scope_url,
           :signing_key => key,
