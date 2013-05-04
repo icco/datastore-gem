@@ -1,3 +1,5 @@
+require 'pp'
+
 module Datastore
   class Client
     def initialize(options)
@@ -32,8 +34,8 @@ module Datastore
       @client.authorization.fetch_access_token!
 
       doc = File.read(File.join(File.dirname(__FILE__), 'datastore_v1beta1_rest.json'))
-      @datastore = @client.register_discovery_document('datastore', 'v1beta1', doc)
-      p @client.discovered_apis
+      @client.register_discovery_document('datastore', 'v1beta1', doc)
+      @datastore = @client.discovery_document('datastore', 'v1beta1')
     end
 
     def insert key, value
@@ -52,7 +54,7 @@ module Datastore
       }
 
       @client.execute(
-        :api_method => 'datastore.datasets.blindwrite',
+        :api_method => @client.discovered_method('blindwrite', 'datastore'),
         :parameters => {
           :datasetId => @dataset,
         },
